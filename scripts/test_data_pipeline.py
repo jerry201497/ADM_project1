@@ -4,8 +4,8 @@ import sys
 # Fix import path
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
-from data.load_data import load_communities_crime
-from data.preprocessing import preprocess_dataset
+from src.data.load_data import load_communities_crime
+from src.data.preprocessing import preprocess_dataset
 
 # 🔥 THIS IS THE IMPORTANT PART
 BASE_DIR = Path(__file__).resolve().parents[1]
