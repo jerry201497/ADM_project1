@@ -1,6 +1,5 @@
 from pathlib import Path
 import sys
-import numpy as np
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(BASE_DIR / "src"))
@@ -23,27 +22,41 @@ def main():
     feature_names = data["feature_names"]
 
     model = BayesianLinearRegression(alpha=1.0, beta=1.0)
-    model.fit_evidence(X_train, y_train)
+    model.fit_evidence(X_train, y_train, verbose=False)
 
     print(f"Optimized alpha: {model.alpha:.6f}")
     print(f"Optimized beta: {model.beta:.6f}")
+    print(f"Log evidence: {model.log_evidence_:.6f}")
+    print(f"Iterations: {model.n_iter_}")
 
-    y_mean, y_std = model.predict(X_test, return_std=True)
-
-    lower = y_mean - 1.96 * y_std
-    upper = y_mean + 1.96 * y_std
+    y_mean, y_std, lower, upper = model.predict(
+        X_test,
+        return_std=True,
+        return_interval=True,
+    )
 
     print("\nFirst 5 predictive intervals:")
     for i in range(5):
-        print(f"Prediction: {y_mean[i]:.4f}, 95% CI: [{lower[i]:.4f}, {upper[i]:.4f}]")
-
-    weights = list(zip(feature_names, model.m_N))
-    weights = [item for item in weights if item[0] != "intercept"]
-    weights.sort(key=lambda x: abs(x[1]), reverse=True)
+        print(
+            f"Prediction: {y_mean[i]:.4f}, "
+            f"Std: {y_std[i]:.4f}, "
+            f"95% CI: [{lower[i]:.4f}, {upper[i]:.4f}]"
+        )
 
     print("\nTop 5 predictors:")
-    for name, weight in weights[:5]:
-        print(f"{name}: {weight:.4f}")
+    summary = model.coefficient_summary(
+        feature_names=feature_names,
+        top_k=5,
+        exclude_intercept=True,
+    )
+
+    for row in summary:
+        print(
+            f"{row['feature']}: "
+            f"mean={row['mean']:.4f}, "
+            f"std={row['std']:.4f}, "
+            f"95% CI=[{row['lower_95']:.4f}, {row['upper_95']:.4f}]"
+        )
 
 
 if __name__ == "__main__":
