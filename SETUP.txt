@@ -1,0 +1,113 @@
+SETUP.txt
+
+Bayesian Linear Regression Project
+Communities and Crime Dataset
+Algorithms for Data Mining (ADM-MIRI)
+Spring 2026
+
+========================================
+1. OPERATING SYSTEM
+========================================
+
+The project was developed and tested on:
+
+- Windows 11
+- Python 3.12
+
+The code should also run on Linux or macOS with equivalent Python environments.
+
+========================================
+2. PYTHON VERSION
+========================================
+
+Recommended Python version:
+
+Python 3.12
+
+
+========================================
+3. REQUIRED PYTHON LIBRARIES
+========================================
+
+The following libraries are required to run the project:
+
+numpy==2.1.3
+pandas==2.2.3
+scikit-learn==1.5.2
+matplotlib==3.9.2
+
+========================================
+4. PROJECT STRUCTURE
+========================================
+
+The project structure is organized as follows:
+
+ADM_project1/
+
+├── data/
+│   └── raw/
+│       ├── communities.data
+│       └── communities.names
+│
+├── reports/
+│
+├── scripts/
+│   ├── run_blr.py
+│   ├── compare_models.py
+│   └── prior_sensitivity.py
+│
+├── src/
+│   ├── data/
+│   │   ├── load_data.py
+│   │   └── preprocessing.py
+│   │
+│   ├── models/
+│   │   └── blr.py
+│   │
+│   └── utils/
+│
+├── README.md
+└── SETUP.txt
+
+========================================
+5. DATASET SETUP
+========================================
+
+Download the following files from the UCI repository:
+
+- communities.data
+- communities.names
+
+Place both files inside:
+
+data/raw/
+
+Dataset source:
+
+https://archive.ics.uci.edu/dataset/183/communities+and+crime
+
+========================================
+6. EXECUTION INSTRUCTIONS
+========================================
+
+Run the Bayesian Linear Regression pipeline:
+
+python -m scripts.run_blr
+
+Compare OLS, Ridge Regression, and BLR:
+
+python -m scripts.compare_models
+
+Run prior sensitivity analysis:
+
+python -m scripts.prior_sensitivity
+
+========================================
+7. NOTES
+========================================
+
+The project implements Bayesian Linear Regression analytically using closed-form equations and NumPy linear algebra operations.
+
+No probabilistic programming libraries were used.
+
+Generative AI tools were occasionally used as auxiliary support for debugging, code organization, and implementation refinement. All methodological decisions, mathematical derivations, experimental configurations, and interpretations were validated manually by the authors.
